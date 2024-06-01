@@ -10,10 +10,21 @@
       }
     </style>
   </head>
-  <body style="background: #67B26F;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #4ca2cd, #67B26F);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #4ca2cd, #67B26F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  ">
+  <body
+    style="
+      background: #67b26f; /* fallback for old browsers */
+      background: -webkit-linear-gradient(
+        to right,
+        #4ca2cd,
+        #67b26f
+      ); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(
+        to right,
+        #4ca2cd,
+        #67b26f
+      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    "
+  >
     <%- include('./partials/nav') %>
 
     <div class="blog-page">
@@ -21,18 +32,23 @@
         <h1><%= blog && blog.title %></h1>
         <img
           src="<%= blog && blog.coverImageURL %>"
-          object-fit = "cover"
+          object-fit="cover"
           width="40%"
-          
         />
         <% if (locals.user) { %> <% const userId = locals.user._id.toString();
         %> <% const blogCreatorId = blog?.createdBy._id.toString(); %> <%
         if(userId === blogCreatorId) { %>
-        <button class="delete-button btn btn-sm btn-primary" data-blog-id="<%= blog && blog._id %>">
+        <button
+          class="delete-button btn btn-sm btn-primary"
+          data-blog-id="<%= blog && blog._id %>"
+        >
           Delete
         </button>
 
-        <button class="edit-button btn btn-sm btn-primary" data-blog-id="<%= blog && blog._id %>">
+        <button
+          class="edit-button btn btn-sm btn-primary"
+          data-blog-id="<%= blog && blog._id %>"
+        >
           Edit
         </button>
         <% } %> <% } %>
@@ -44,8 +60,13 @@
 
       <div class="container mt-4">
         <h5>Author :</h5>
-        <img class="border-bottom border-primary" src="<%= blog && blog.createdBy.profileImageURL %>" width="50px" />
-        <%= blog && blog.createdBy && blog.createdBy.name %>
+        <% if (blog && blog.createdBy) { %>
+        <img
+          class="border-bottom border-primary"
+          src="<%= blog.createdBy.profileImageURL %>"
+          width="50px"
+        />
+        <%= blog.createdBy.name %> <% } %>
       </div>
 
       <div class="container mt-4">
@@ -59,15 +80,18 @@
               class="form-control is-valid"
               placeholder="Enter your comment"
             />
-            <button class="btn btn-sm btn-primary mt-2" type="submit">Add</button>
+            <button class="btn btn-sm btn-primary mt-2" type="submit">
+              Add
+            </button>
           </div>
         </form>
         <% } %>
         <div class="mt-3">
           <% comments.forEach(comment => { %>
           <div class="mb-4 border-primary border-top border-bottom">
+            <% if (comment.createdBy) { %>
             <img src="<%= comment.createdBy.profileImageURL %>" width="50px" />
-            <%= comment.createdBy && comment.createdBy.name %>
+            <%= comment.createdBy.name %> <% } %>
             <pre><%= comment && comment.content %></pre>
           </div>
           <% }) %>
@@ -101,7 +125,7 @@
           </div>
           <div class="mb-3">
             <label for="body">Body</label>
-            <textarea  name="body" class="form-control" id="body">
+            <textarea name="body" class="form-control" id="body">
 <%= blog && blog.body %></textarea
             >
           </div>
