@@ -7,4 +7,4 @@ Tech Stack:
 5.AWS Elastic Beanstalk
 6.AWS CodePipeline CI/CD 
 
-Live version : https://i-blogify.onrender.com](http://blogify-final-env.eba-izfyq3wn.ap-south-1.elasticbeanstalk.com/
+Live version : http://blogify-final-env.eba-izfyq3wn.ap-south-1.elasticbeanstalk.com/
