@@ -8,94 +8,193 @@
       .blog-page-form {
         display: none;
       }
+
+      /* Styling for the blog title */
+      .blog-title {
+        background-color: rgba(175, 175, 175, 0.2);
+        color: white;
+        border: 1px solid grey;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        font-size: 24px;
+        margin-bottom: 20px;
+        display: block;
+        margin: 0 auto;
+
+      }
+
+      /* Styling for the blog cover image */
+      .blog-cover-image {
+        padding-top: 10px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        margin-top: 10px;
+        object-fit: cover;
+        width: 40%;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      /* Styling for the delete and edit buttons */
+      .delete-button,
+      .edit-button {
+        margin-right: 10px;
+        font-size: 14px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #2985b3;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* Styling for the comment section */
+      .comments-section {
+        margin-top: 30px;
+      }
+
+      /* Styling for the comment form */
+      .comment-form {
+        margin-bottom: 20px;
+      }
+
+      /* Styling for the comment input */
+      .comment-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+      }
+
+      /* Styling for the comment submit button */
+      .comment-submit-button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #2985b3;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      /* Styling for the comment container */
+      .comment-container {
+        margin-bottom: 20px;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 10px 0;
+      }
+
+      /* Styling for the comment author */
+      .comment-author {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      /* Styling for the comment author image */
+      .comment-author-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      /* Styling for the comment content */
+      .comment-content {
+        white-space: pre-wrap;
+      }
     </style>
   </head>
   <body
-    style="
-      background: #67b26f; /* fallback for old browsers */
-      background: -webkit-linear-gradient(
-        to right,
-        #4ca2cd,
-        #67b26f
-      ); /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(
-        to right,
-        #4ca2cd,
-        #67b26f
-      ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    "
+  style="background: #67B26F;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #4ca2cd, #67B26F);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #4ca2cd, #67B26F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  "
   >
     <%- include('./partials/nav') %>
 
-    <div class="blog-page">
+    <div class="blog-page" style="display: flex; flex-direction: column; align-items: center; text-align: center;"></div>
       <div class="container mt-4">
-        <h1><%= blog ? blog.title : '' %></h1>
+        <h1 class="blog-title" style="text-align: center;"><%= blog ? blog.title : '' %></h1>
         <img
           src="<%= blog ? blog.coverImageURL : '' %>"
-          object-fit="cover"
-          width="40%"
+          class="blog-cover-image"
+          style="margin: 0 auto;"
         />
         <% if (locals.user && blog && blog.createdBy) { %> 
           <% const userId = locals.user._id.toString(); %>
           <% const blogCreatorId = blog.createdBy._id.toString(); %>
           <% if(userId === blogCreatorId) { %>
-            <button
-              class="delete-button btn btn-sm btn-primary"
-              data-blog-id="<%= blog._id %>"
-            >
-              Delete
-            </button>
+            <div style="display: flex; justify-content: center;">
+              <button
+                class="delete-button btn btn-sm btn-primary"
+                data-blog-id="<%= blog._id %>"
+              >
+                Delete
+              </button>
 
-            <button
-              class="edit-button btn btn-sm btn-primary"
-              data-blog-id="<%= blog._id %>"
-            >
-              Edit
-            </button>
+              <button
+                class="edit-button btn btn-sm btn-primary"
+                data-blog-id="<%= blog._id %>"
+              >
+                Edit
+              </button>
+            </div>
           <% } %> 
         <% } %>
 
-        <div class="mt-3" style="white-space: pre-wrap">
+        <div class="mt-3" style="white-space: pre-wrap; text-align: left;">
           <%= blog ? blog.body : '' %>
         </div>
       </div>
 
       <div class="container mt-4">
-        <h5>Author :</h5>
+        <h5 style="text-align: center;">Author :</h5>
         <% if (blog && blog.createdBy) { %>
-        <img
-          class="border-bottom border-primary"
-          src="<%= blog.createdBy.profileImageURL %>"
-          width="50px"
-        />
-        <%= blog.createdBy.name %> <% } %>
+        <div class="comment-author" style="display: flex; align-items: center; justify-content: center;">
+          <img
+            class="comment-author-image"
+            src="<%= blog.createdBy.profileImageURL %>"
+            style="margin-right: 10px;"
+          />
+          <%= blog.createdBy.name %> 
+        </div>
+        <% } %>
       </div>
 
-      <div class="container mt-4">
-        <h1>Comments (<%= comments ? comments.length : 0 %>)</h1>
+      <div class="container mt-4 comments-section"></div>
+        <h1 style="text-align: center;">Comments (<%= comments ? comments.length : 0 %>)</h1>
         <% if (locals.user && blog) { %>
-        <form action="/blog/comment/<%= blog._id %>" method="post">
-          <div class="mb-4">
+        <form action="/blog/comment/<%= blog._id %>" method="post" class="comment-form">
+          <div class="mb-4" style="display: flex; justify-content: center;">
             <input
               type="text"
               name="content"
-              class="form-control is-valid"
+              class="comment-input form-control is-valid"
               placeholder="Enter your comment"
+              style="width: 70%;"
             />
-            <button class="btn btn-sm btn-primary mt-2" type="submit">
+            <button class="comment-submit-button btn btn-sm btn-primary mt-2" type="submit">
               Add
             </button>
           </div>
         </form>
         <% } %>
-        <div class="mt-3">
+        <div class="mt-3"></div>
           <% if (comments) { %>
             <% comments.forEach(comment => { %>
-              <div class="mb-4 border-primary border-top border-bottom">
+              <div class="comment-container"></div>
                 <% if (comment.createdBy) { %>
-                <img src="<%= comment.createdBy.profileImageURL %>" width="50px" />
-                <%= comment.createdBy.name %> <% } %>
-                <pre><%= comment ? comment.content : '' %></pre>
+                <div class="comment-author" style="display: flex; align-items: center; justify-content: center;"></div>
+                  <img src="<%= comment.createdBy.profileImageURL %>" class="comment-author-image" style="margin-right: 10px;" />
+                  <%= comment.createdBy.name %> 
+                </div>
+                <% } %>
+                <pre class="comment-content"><%= comment ? comment.content : '' %></pre>
               </div>
             <% }) %>
           <% } %>
@@ -103,12 +202,13 @@
       </div>
     </div>
 
-    <div class="blog-page-form">
+    <div class="blog-page-form" style="display: none; text-align: center;">
       <div class="container mt-3">
         <img
           src="<%= blog ? blog.coverImageURL : '' %>"
           width="700px"
           height="380px"
+          style="margin: 0 auto;"
         />
         <% if (blog) { %>
           <form
@@ -116,8 +216,9 @@
             action="/blog/update/<%= blog._id %>"
             method="post"
             enctype="multipart/form-data"
+            style="display: flex; flex-direction: column; align-items: center; text-align: center;"
           >
-            <div class="mb-3">
+            <div class="mb-3" style="width: 70%;">
               <label for="title" class="form-label">Title</label>
               <input
                 type="text"
@@ -128,11 +229,9 @@
                 value="<%= blog.title %>"
               />
             </div>
-            <div class="mb-3">
+            <div class="mb-3" style="width: 70%;">
               <label for="body">Body</label>
-              <textarea name="body" class="form-control" id="body">
-  <%= blog.body %></textarea
-              >
+              <textarea name="body" class="form-control" id="body" style="height: 200px; resize: none; font-family: Arial, sans-serif; font-size: 16px; padding: 10px;"></textarea>
             </div>
             <div class="mb-3">
               <button id="submitBtn" class="btn btn-primary">Submit</button>
